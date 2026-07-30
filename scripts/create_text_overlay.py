@@ -64,6 +64,12 @@ def text_element(block: object, index: int) -> str:
         "letter-spacing": block.get("letter_spacing", 0),
         "opacity": block.get("opacity", 1),
     }
+    if "stroke" in block:
+        attributes["stroke"] = block["stroke"]
+        attributes["stroke-width"] = number(
+            block.get("stroke_width", 1), f"text_blocks[{index}].stroke_width"
+        )
+        attributes["paint-order"] = "stroke fill"
     transform = ""
     if "rotate" in block:
         angle = number(block["rotate"], f"text_blocks[{index}].rotate")

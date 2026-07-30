@@ -7,6 +7,8 @@ description: Analyze one to six user photos and art-direct expressive collage po
 
 Treat the task as art direction, not template filling. Make the photo and the words coequal design materials. Decide their roles before generating anything.
 
+When visual collage references are supplied, extract their **relationship grammar** before choosing a direction. Read [reference-interaction-grammar.md](references/reference-interaction-grammar.md). Learn the roles, overlaps, scale, and visual tension from the references; do not copy their subjects, wording, logos, or exact palette unless requested.
+
 ## Mode policy
 
 Choose the mode before writing directions or prompts:
@@ -29,11 +31,18 @@ Inspect every supplied image. Record:
 - theme cues such as pet, food, travel, friendship, event, fashion, or daily life;
 - any existing text or logo that must not be accidentally imitated.
 
+For supplied visual references, separately record:
+
+- background-field strategy and its share of the canvas;
+- photo-object treatment: full bleed, raw rectangle, framed window, crop, or insert;
+- exact image–type interaction: type through, over, around, behind, or interrupting the photo;
+- role of any graphic material: structural anchor, directional break, or visual counterweight.
+
 Do not inherit colors from a reference collage. Derive the palette from the user’s source image unless the user explicitly requests another palette.
 
 ### 2. Decide the image role
 
-Choose the image treatment before choosing typography:
+Choose the image treatment and the image–type interaction before choosing typography:
 
 - **full-image background** — keep the whole scene; let type punctuate or dominate it;
 - **framed image object** — place the photo as one material on a solid or paper-like ground;
@@ -43,6 +52,8 @@ Choose the image treatment before choosing typography:
 - **multi-image narrative** — assign hero, support, and detail roles; never default to an equal grid.
 
 Use the decision rules in [layout-grammar.md](references/layout-grammar.md).
+
+When references are supplied, choose one of the interaction families in [reference-interaction-grammar.md](references/reference-interaction-grammar.md). Do not reduce a reference-driven collage to a portrait column plus isolated text cards.
 
 ### 3. Create genuinely different directions
 
@@ -73,6 +84,8 @@ For each direction, specify:
 ### 4. Compose image and type together
 
 Use one of the layout grammars rather than placing text in leftover space. Permit overlap, cropping, asymmetric tension, and controlled edge violations.
+
+Treat the background field, photo object, type mass, and one optional graphic material as four related layers. Make type actively cross, press against, nest with, or interrupt the photo when the chosen interaction calls for it. Do not default to symmetrical boxes, polite type-safe panels, or two-column corporate composition.
 
 Make hierarchy visible:
 

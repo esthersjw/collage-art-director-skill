@@ -13,6 +13,11 @@ source:
   hero: "photo or subject to preserve"
   preserve: ["identity", "pose", "key object"]
   crop_safe: "what may be cropped"
+reference_grammar:
+  background_field: "how the background participates"
+  photo_object: "how the photo behaves as an object"
+  type_interaction: "how type meets the photo"
+  graphic_material_role: "why any accent exists"
 recipe:
   layout_grammar: "one grammar from layout-grammar.md"
   image_role: "hero image treatment"
@@ -43,7 +48,7 @@ When three directions are requested, record a distinct recipe for each. Reject d
 Write the prompt in this field order. Keep it decisive and specific; include only visible instructions.
 
 1. **Canvas and source:** output ratio, source-photo fidelity, subject, allowed crop, and preserved details.
-2. **Composition:** layout grammar, image role, percentage-based scale, placement, and explicit layer relationship.
+2. **Composition:** layout grammar, image role, percentage-based scale, placement, and explicit layer relationship. When a visual reference is supplied, name its chosen interaction family and make that relationship visible; do not translate it into separated text cards.
 3. **Materials and palette:** source-derived palette, selected material family, texture, and type-free zones.
 4. **Negative constraints:** no final lettering, malformed text, fake logos, identity drift, unrelated props, generic decorations, blur, glossy 3D stickers, or unrequested style effects.
 
@@ -54,7 +59,7 @@ Request a text-free base with clearly reserved typography zones. Never ask an im
 1. Generate the base with the available image-generation or editing capability.
 2. Inspect the result before typesetting. Regenerate the base once if it fails a source-preservation gate or its selected recipe is not recognizable.
 3. Add final wording with real installed or loadable fonts in HTML, SVG, canvas, or a design tool. Set line breaks, positions, contrast patches, and front/behind-subject relationships explicitly.
-4. For a reusable SVG route, create a JSON composition specification and run `python3 scripts/create_text_overlay.py spec.json finished-poster.svg`. Use one `text_blocks` entry per intended line. Each entry requires `text`, `x`, `y`, `font_family`, and `font_size`; it may also set `font_weight`, `fill`, `anchor`, `letter_spacing`, `opacity`, and `rotate`. The `canvas` object requires `width`, `height`, and a `background_image` path relative to the JSON file. The generated SVG embeds the base image and preserves exact editable text.
+4. For a reusable SVG route, create a JSON composition specification and run `python3 scripts/create_text_overlay.py spec.json finished-poster.svg`. Use one `text_blocks` entry per intended line. Each entry requires `text`, `x`, `y`, `font_family`, and `font_size`; it may also set `font_weight`, `fill`, `anchor`, `letter_spacing`, `opacity`, `rotate`, `stroke`, and `stroke_width`. Use `stroke` only when a type block crosses backgrounds with incompatible contrast. The `canvas` object requires `width`, `height`, and a `background_image` path relative to the JSON file. The generated SVG embeds the base image and preserves exact editable text.
 5. Export the SVG through the available browser or design tool when a PNG is required. Inspect the rasterized result at the requested output size before delivery.
 
 If deterministic typesetting is unavailable, say so before delivery. Do not claim malformed model lettering is exact final text.
@@ -69,6 +74,7 @@ Pass every gate before delivery:
 - **Typography:** reproduce required text exactly with real type; keep it readable and sufficiently contrasted at its actual overlap area.
 - **No template drift:** do not use equal photo grids, centered-everything layouts, generic sticker outlines, decorative filler, fake brands, or an unrequested style treatment.
 - **Recipe fidelity:** make the selected layout grammar, image role, and layer order visible in the finished image.
+- **Reference fidelity:** when a visual reference is supplied, preserve its relationship grammar—background field, photo-object role, type interaction, and material purpose—without copying its literal subject matter.
 
 Score the result using the main skill's 100-point rubric after it passes the gates. If a gate fails, fix that failure rather than merely adjusting the score. Make at most two revision cycles: one base-image retry and one typography/composition correction. Report any remaining limitation instead of silently delivering a failed result.
 
