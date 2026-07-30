@@ -28,15 +28,50 @@ def attribute(value: object) -> str:
     return html.escape(str(value), quote=True)
 
 
-def image_data_uri(path_value: object, spec_path: Path) -> str:
+def image_data_uri(path_value: object, spec_path: Path, field: str) -> str:
     if not isinstance(path_value, str) or not path_value:
-        raise ValueError("canvas.background_image must be a non-empty path")
+        raise ValueError(f"{field} must be a non-empty path")
     image_path = (spec_path.parent / path_value).resolve()
     if not image_path.is_file():
-        raise ValueError(f"background image does not exist: {image_path}")
+        raise ValueError(f"image does not exist: {image_path}")
     mime_type = mimetypes.guess_type(image_path.name)[0] or "image/png"
     encoded = base64.b64encode(image_path.read_bytes()).decode("ascii")
     return f"data:{mime_type};base64,{encoded}"
+
+
+def image_element(block: object, index: int, spec_path: Path) -> str:
+    if not isinstance(block, dict):
+        raise ValueError(f"image_blocks[{index}] must be an object")
+    image = image_data_uri(block.get("image"), spec_path, f"image_blocks[{index}].image")
+    x = number(block.get("x"), f"image_blocks[{index}].x")
+    y = number(block.get("y"), f"image_blocks[{index}].y")
+    width = number(block.get("width"), f"image_blocks[{index}].width")
+    height = number(block.get("height"), f"image_blocks[{index}].height")
+    if width <= 0 or height <= 0:
+        raise ValueError(f"image_blocks[{index}] dimensions must be positive")
+
+    attributes = {
+        "href": image,
+        "x": x,
+        "y": y,
+        "width": width,
+        "height": height,
+        "opacity": block.get("opacity", 1),
+        "preserveAspectRatio": block.get("preserve_aspect_ratio", "xMidYMid slice"),
+    }
+    transform = ""
+    if "rotate" in block:
+        angle = number(block["rotate"], f"image_blocks[{index}].rotate")
+        center_x = x + width / 2
+        center_y = y + height / 2
+        transform = (
+            f' transform="rotate({attribute(angle)} {attribute(center_x)} '
+            f'{attribute(center_y)})"'
+        )
+    rendered_attributes = " ".join(
+        f'{key}="{attribute(value)}"' for key, value in attributes.items()
+    )
+    return f"  <image {rendered_attributes}{transform} />"
 
 
 def text_element(block: object, index: int) -> str:
@@ -94,12 +129,35 @@ def build_svg(spec: dict, spec_path: Path) -> str:
     if not isinstance(blocks, list) or not blocks:
         raise ValueError("text_blocks must be a non-empty list")
 
-    background = image_data_uri(canvas.get("background_image"), spec_path)
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         f'<svg xmlns="http://www.w3.org/2000/svg" width="{attribute(width)}" height="{attribute(height)}" viewBox="0 0 {attribute(width)} {attribute(height)}">',
-        f'  <image href="{attribute(background)}" width="{attribute(width)}" height="{attribute(height)}" preserveAspectRatio="xMidYMid slice" />',
     ]
+    background_color = canvas.get("background_color")
+    if background_color is not None:
+        if not isinstance(background_color, str) or not background_color:
+            raise ValueError("canvas.background_color must be a non-empty string")
+        lines.append(
+            f'  <rect width="{attribute(width)}" height="{attribute(height)}" '
+            f'fill="{attribute(background_color)}" />'
+        )
+    background_path = canvas.get("background_image")
+    if background_path is not None:
+        background = image_data_uri(background_path, spec_path, "canvas.background_image")
+        lines.append(
+            f'  <image href="{attribute(background)}" width="{attribute(width)}" '
+            f'height="{attribute(height)}" preserveAspectRatio="xMidYMid slice" />'
+        )
+    if background_color is None and background_path is None:
+        raise ValueError("canvas must include background_color or background_image")
+
+    image_blocks = spec.get("image_blocks", [])
+    if not isinstance(image_blocks, list):
+        raise ValueError("image_blocks must be a list")
+    lines.extend(
+        image_element(block, index, spec_path)
+        for index, block in enumerate(image_blocks)
+    )
     lines.extend(text_element(block, index) for index, block in enumerate(blocks))
     lines.append("</svg>")
     return "\n".join(lines) + "\n"
