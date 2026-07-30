@@ -1,6 +1,6 @@
 # Reference interaction grammar
 
-Use this file when the user supplies collage references. Read the references as a system of visual relationships, not as a bag of colors or stickers.
+Use this file when the user supplies collage references. Read the references as a system of visual relationships, not as a bag of colors or stickers. A composition may use two, three, or all four layers; deliberate absence is better than forcing every layer into every poster.
 
 ## The four-layer read
 
@@ -11,7 +11,7 @@ For each reference, identify:
 3. **Type mass** — words act as large visual shapes. They may cross the image edge, sit on the photo, break into pieces, or become the layout grid.
 4. **Graphic material** — a star, arrow, strip, silhouette, or label is allowed only when it creates direction, interruption, or counterweight.
 
-Keep every layer active. Do not isolate photo and wording into polite columns or matching cards.
+Keep the selected layers in an intentional relationship. Do not isolate photo and wording into polite columns or matching cards.
 
 ## Six interaction families
 
@@ -49,6 +49,7 @@ Split a large phrase across the canvas. Put one photo rectangle through a word g
 - Use no more than two material families. A large star, arrow, strip, or silhouette must have a compositional job, not just a decorative one.
 - Prefer uneven, tactile print texture and purposeful edge crops over glossy polish, UI cards, or evenly spaced modules.
 - Keep final required copy as real typography. Translate expressive reference lettering into a font, letter spacing, outline, shadow, or manually placed glyphs; never delegate exact copy to the image model.
+- When the selected mode calls for type on top, keep the exact final words topmost across both photo and background. Do not let the base-image layer accidentally bury the title.
 
 ## Reference-driven quality gate
 

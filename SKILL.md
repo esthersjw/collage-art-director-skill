@@ -7,7 +7,7 @@ description: Analyze one to six user photos and art-direct expressive collage po
 
 Treat the task as art direction, not template filling. Make the photo and the words coequal design materials. Decide their roles before generating anything.
 
-When visual collage references are supplied, extract their **relationship grammar** before choosing a direction. Read [reference-interaction-grammar.md](references/reference-interaction-grammar.md). Learn the roles, overlaps, scale, and visual tension from the references; do not copy their subjects, wording, logos, or exact palette unless requested.
+When visual collage references are supplied, extract their **relationship grammar** before choosing a direction. Read [reference-interaction-grammar.md](references/reference-interaction-grammar.md) and [composition-modes.md](references/composition-modes.md). Learn the roles, overlaps, scale, and visual tension from the references; do not copy their subjects, wording, logos, or exact palette unless requested.
 
 ## Mode policy
 
@@ -28,8 +28,12 @@ Inspect every supplied image. Record:
 - scene, dominant colors, lighting, texture, visual density, empty space;
 - details worth preserving and details safe to crop;
 - whether clean subject separation is feasible;
+- whether the original scene already has a complete background and visual narrative;
+- supporting objects, animals, clothing details, gestures, and textures that can become source-derived cutout materials;
 - theme cues such as pet, food, travel, friendship, event, fashion, or daily life;
 - any existing text or logo that must not be accidentally imitated.
+
+For existing visible words, choose one explicit policy before composition: preserve them as part of the scene, remove or crop them, or replace them with deterministic final typography. Do not leave source wording beneath duplicated final copy.
 
 For supplied visual references, separately record:
 
@@ -53,7 +57,7 @@ Choose the image treatment and the image–type interaction before choosing typo
 
 Use the decision rules in [layout-grammar.md](references/layout-grammar.md).
 
-When references are supplied, choose one of the interaction families in [reference-interaction-grammar.md](references/reference-interaction-grammar.md). Do not reduce a reference-driven collage to a portrait column plus isolated text cards.
+Before composing, classify the source as **complete-scene**, **cutout-ready subject**, or **photo-block with breakout potential**, then choose a composition mode in [composition-modes.md](references/composition-modes.md). When references are supplied, also choose one interaction family in [reference-interaction-grammar.md](references/reference-interaction-grammar.md). Do not reduce a reference-driven collage to a portrait column plus isolated text cards.
 
 ### 3. Create genuinely different directions
 
@@ -87,6 +91,8 @@ Use one of the layout grammars rather than placing text in leftover space. Permi
 
 Treat the background field, photo object, type mass, and one optional graphic material as four related layers. Make type actively cross, press against, nest with, or interrupt the photo when the chosen interaction calls for it. Do not default to symmetrical boxes, polite type-safe panels, or two-column corporate composition.
 
+State the complete z-order before rendering. In reconstruction, type-led, and photo-block modes, keep the final required title as the topmost layer by default; let it cross background, photo block, and non-critical subject areas. Place it behind the image only when that is the chosen relationship, not by accident.
+
 Make hierarchy visible:
 
 - one dominant event;
@@ -100,6 +106,8 @@ When using label fragments, keep them visually consistent and leave intentional 
 ### 5. Match materials to the subject
 
 Select materials semantically, not from a universal sticker pack. Read [theme-language.md](references/theme-language.md) and use at most two material families.
+
+Prefer crop-ready details from the source photo. Generate a supplementary material only when it is a semantically specific counterpart to the subject and has a clear compositional job; for example, a cat's fish or paw mark, a performance's microphone cue, or a scene-specific object. Never use generated material as generic filler.
 
 Do not add stars, arrows, sticky notes, tape, sauce, flowers, grain, or doodles merely because the work is called a collage.
 
