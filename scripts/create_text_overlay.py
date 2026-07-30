@@ -1,0 +1,119 @@
+#!/usr/bin/env python3
+"""Create an editable SVG poster from a base image and exact text blocks.
+
+Usage:
+    python3 create_text_overlay.py spec.json finished-poster.svg
+
+The JSON spec has a ``canvas`` object and a ``text_blocks`` list. See
+references/production-protocol.md for the schema and workflow.
+"""
+
+from __future__ import annotations
+
+import argparse
+import base64
+import html
+import json
+import mimetypes
+from pathlib import Path
+
+
+def number(value: object, field: str) -> float:
+    if not isinstance(value, (int, float)):
+        raise ValueError(f"{field} must be a number")
+    return value
+
+
+def attribute(value: object) -> str:
+    return html.escape(str(value), quote=True)
+
+
+def image_data_uri(path_value: object, spec_path: Path) -> str:
+    if not isinstance(path_value, str) or not path_value:
+        raise ValueError("canvas.background_image must be a non-empty path")
+    image_path = (spec_path.parent / path_value).resolve()
+    if not image_path.is_file():
+        raise ValueError(f"background image does not exist: {image_path}")
+    mime_type = mimetypes.guess_type(image_path.name)[0] or "image/png"
+    encoded = base64.b64encode(image_path.read_bytes()).decode("ascii")
+    return f"data:{mime_type};base64,{encoded}"
+
+
+def text_element(block: object, index: int) -> str:
+    if not isinstance(block, dict):
+        raise ValueError(f"text_blocks[{index}] must be an object")
+    value = block.get("text")
+    if not isinstance(value, str) or not value:
+        raise ValueError(f"text_blocks[{index}].text must be a non-empty string")
+
+    x = number(block.get("x"), f"text_blocks[{index}].x")
+    y = number(block.get("y"), f"text_blocks[{index}].y")
+    size = number(block.get("font_size"), f"text_blocks[{index}].font_size")
+    family = block.get("font_family")
+    if not isinstance(family, str) or not family:
+        raise ValueError(f"text_blocks[{index}].font_family must be a non-empty string")
+
+    attributes = {
+        "x": x,
+        "y": y,
+        "font-family": family,
+        "font-size": size,
+        "font-weight": block.get("font_weight", 400),
+        "fill": block.get("fill", "#111111"),
+        "text-anchor": block.get("anchor", "start"),
+        "letter-spacing": block.get("letter_spacing", 0),
+        "opacity": block.get("opacity", 1),
+    }
+    transform = ""
+    if "rotate" in block:
+        angle = number(block["rotate"], f"text_blocks[{index}].rotate")
+        transform = f' transform="rotate({attribute(angle)} {attribute(x)} {attribute(y)})"'
+
+    rendered_attributes = " ".join(
+        f'{key}="{attribute(value)}"' for key, value in attributes.items()
+    )
+    return f"  <text {rendered_attributes}{transform}>{html.escape(value)}</text>"
+
+
+def build_svg(spec: dict, spec_path: Path) -> str:
+    canvas = spec.get("canvas")
+    if not isinstance(canvas, dict):
+        raise ValueError("canvas must be an object")
+    width = number(canvas.get("width"), "canvas.width")
+    height = number(canvas.get("height"), "canvas.height")
+    if width <= 0 or height <= 0:
+        raise ValueError("canvas dimensions must be positive")
+
+    blocks = spec.get("text_blocks")
+    if not isinstance(blocks, list) or not blocks:
+        raise ValueError("text_blocks must be a non-empty list")
+
+    background = image_data_uri(canvas.get("background_image"), spec_path)
+    lines = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        f'<svg xmlns="http://www.w3.org/2000/svg" width="{attribute(width)}" height="{attribute(height)}" viewBox="0 0 {attribute(width)} {attribute(height)}">',
+        f'  <image href="{attribute(background)}" width="{attribute(width)}" height="{attribute(height)}" preserveAspectRatio="xMidYMid slice" />',
+    ]
+    lines.extend(text_element(block, index) for index, block in enumerate(blocks))
+    lines.append("</svg>")
+    return "\n".join(lines) + "\n"
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description="Create an editable SVG poster with exact text.")
+    parser.add_argument("spec", type=Path, help="JSON composition specification")
+    parser.add_argument("output", type=Path, help="Output SVG path")
+    args = parser.parse_args()
+
+    try:
+        spec = json.loads(args.spec.read_text(encoding="utf-8"))
+        if not isinstance(spec, dict):
+            raise ValueError("the specification root must be an object")
+        args.output.parent.mkdir(parents=True, exist_ok=True)
+        args.output.write_text(build_svg(spec, args.spec.resolve()), encoding="utf-8")
+    except (OSError, ValueError, json.JSONDecodeError) as exc:
+        raise SystemExit(f"error: {exc}")
+
+
+if __name__ == "__main__":
+    main()

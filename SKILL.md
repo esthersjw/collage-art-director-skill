@@ -7,6 +7,15 @@ description: Analyze one to six user photos and art-direct expressive collage po
 
 Treat the task as art direction, not template filling. Make the photo and the words coequal design materials. Decide their roles before generating anything.
 
+## Mode policy
+
+Choose the mode before writing directions or prompts:
+
+- **Direction mode** — use when the user asks for ideas, a brief, an evaluation, an iteration, or help choosing a direction. Return three concise, structurally different directions. Do not generate rendered variants unless the user explicitly asks for them.
+- **Production mode** — use when the user asks to make or generate a finished poster. Select one strongest direction when the user has not chosen one; generate one finished route by default, not three expensive near-duplicates. Generate multiple finished variants only when requested.
+
+For production mode, read [production-protocol.md](references/production-protocol.md) before creating the image. Follow its compile, render, and quality-gate sequence. Do not substitute a prompt alone for a requested finished poster.
+
 ## Core workflow
 
 ### 1. Read the source
@@ -35,9 +44,9 @@ Choose the image treatment before choosing typography:
 
 Use the decision rules in [layout-grammar.md](references/layout-grammar.md).
 
-### 3. Create three genuinely different directions
+### 3. Create genuinely different directions
 
-Unless the user requests one result, propose or generate three concepts. Each must differ in at least three of these dimensions:
+In Direction mode, propose three concepts. In Production mode, select one concept or use the user's selected concept. When presenting multiple concepts, each must differ in at least three of these dimensions:
 
 - image role;
 - z-order;
@@ -108,6 +117,8 @@ When using an image-generation or editing model:
 - prohibit blur, fake depth-of-field, fog, glossy 3D stickers, generic gradients, warped anatomy, fake logos, and unrelated props;
 - do not invent food, sauce, or accessories that alter the meaning of the photo.
 
+In Production mode, generate a text-free base first, inspect it, and add required text with real fonts only after the base passes source-preservation checks. Use the production protocol's base-prompt field order and its retry limits.
+
 ### 8. Critique and revise
 
 Score every direction before delivery:
@@ -119,18 +130,18 @@ Score every direction before delivery:
 - typography quality and legibility: 15;
 - structural distinctness from the other concepts: 10.
 
-Revise any result below 85/100. Do not present a weak variant merely to complete a set of three.
+Use the score to guide art-direction critique. In Production mode, also apply the hard quality gates in [production-protocol.md](references/production-protocol.md). Revise any result below 85/100 or any result that fails a hard gate. Do not present a weak variant merely to complete a set of three.
 
 Check the anti-pattern list in [typography-and-qc.md](references/typography-and-qc.md).
 
 ## Output contract
 
-For planning tasks, return a concise creative brief plus three structured directions.
+For Direction mode, return a concise creative brief plus three structured directions.
 
-For image-making tasks:
+For Production mode:
 
 1. show the finished previews, not only prompts or download links;
-2. explain the structural difference between directions in one line each;
+2. return the selected production recipe in a compact structured form;
 3. preserve editable exact text when the chosen medium supports it;
 4. mention any limitation that prevented deterministic typography or clean subject separation.
 
