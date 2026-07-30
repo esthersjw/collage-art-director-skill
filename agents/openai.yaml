@@ -1,0 +1,14 @@
+interface:
+  display_name: Collage Art Director
+  short_description: "\u628A\u7167\u7247\u91CD\u6784\u6210\u5177\u6709\u56FE\u6587\
+    \u5C42\u7EA7\u3001\u4E3B\u9898\u7D20\u6750\u4E0E\u9AD8\u7EA7\u6392\u7248\u7684\
+    \u62FC\u8D34\u6D77\u62A5"
+  default_prompt: Use $collage-art-director to analyze my photos and create three
+    structurally different collage poster directions.
+policy:
+  products:
+  - chatgpt
+  - codex
+  - api
+  - atlas
+  allow_implicit_invocation: true
