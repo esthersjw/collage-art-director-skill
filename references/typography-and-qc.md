@@ -32,6 +32,12 @@ For Chinese, prioritize fonts with complete Chinese glyph coverage. A Latin disp
 - Do not allow AI-generated pseudo-letters in final required copy.
 - Keep body or support text horizontally readable unless the concept explicitly requires rotation.
 
+## Model-led display exception
+
+Use model-rendered lettering only as an explicitly chosen display treatment, never as the default typesetting route. Retain it only when a single short phrase is exact, legible at phone-preview scale, and visibly more integrated with the source medium than a real-font overlay.
+
+Always render Chinese, names, dates, URLs, brand copy, support copy, and microcopy with real fonts. If the model phrase is even slightly misspelled, ambiguous, generic, or hidden by the subject, replace it with deterministic type rather than attempting to repair isolated letters.
+
 ## Placement rules
 
 - Measure contrast where the glyphs overlap the image, not against the average palette.

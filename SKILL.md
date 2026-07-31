@@ -7,6 +7,8 @@ description: Analyze one to six user photos and art-direct expressive collage po
 
 Treat the task as art direction, not template filling. Make the photo and the words coequal design materials. Decide their roles before generating anything.
 
+When visual collage references are supplied, extract their **relationship grammar** before choosing a direction. Read [reference-interaction-grammar.md](references/reference-interaction-grammar.md) and [composition-modes.md](references/composition-modes.md). Learn the roles, overlaps, scale, and visual tension from the references; do not copy their subjects, wording, logos, or exact palette unless requested.
+
 ## Mode policy
 
 Choose the mode before writing directions or prompts:
@@ -26,14 +28,26 @@ Inspect every supplied image. Record:
 - scene, dominant colors, lighting, texture, visual density, empty space;
 - details worth preserving and details safe to crop;
 - whether clean subject separation is feasible;
+- whether the original scene already has a complete background and visual narrative;
+- supporting objects, animals, clothing details, gestures, and textures that can become source-derived cutout materials;
+- any **context anchor** that gives the subject its meaning: for example, a person at a door with the full facade, a pet with the hands holding it, or a performer with the microphone and stage cue. Preserve the anchor as one deliberate group when reconstructing;
 - theme cues such as pet, food, travel, friendship, event, fashion, or daily life;
 - any existing text or logo that must not be accidentally imitated.
+
+For existing visible words, choose one explicit policy before composition: preserve them as part of the scene, remove or crop them, or replace them with deterministic final typography. Do not leave source wording beneath duplicated final copy.
+
+For supplied visual references, separately record:
+
+- background-field strategy and its share of the canvas;
+- photo-object treatment: full bleed, raw rectangle, framed window, crop, or insert;
+- exact image–type interaction: type through, over, around, behind, or interrupting the photo;
+- role of any graphic material: structural anchor, directional break, or visual counterweight.
 
 Do not inherit colors from a reference collage. Derive the palette from the user’s source image unless the user explicitly requests another palette.
 
 ### 2. Decide the image role
 
-Choose the image treatment before choosing typography:
+Choose the image treatment and the image–type interaction before choosing typography:
 
 - **full-image background** — keep the whole scene; let type punctuate or dominate it;
 - **framed image object** — place the photo as one material on a solid or paper-like ground;
@@ -43,6 +57,8 @@ Choose the image treatment before choosing typography:
 - **multi-image narrative** — assign hero, support, and detail roles; never default to an equal grid.
 
 Use the decision rules in [layout-grammar.md](references/layout-grammar.md).
+
+Before composing, classify the source as **complete-scene**, **cutout-ready subject**, or **photo-block with breakout potential**, then choose a composition mode in [composition-modes.md](references/composition-modes.md). When references are supplied, also choose one interaction family in [reference-interaction-grammar.md](references/reference-interaction-grammar.md). Do not reduce a reference-driven collage to a portrait column plus isolated text cards.
 
 ### 3. Create genuinely different directions
 
@@ -74,6 +90,12 @@ For each direction, specify:
 
 Use one of the layout grammars rather than placing text in leftover space. Permit overlap, cropping, asymmetric tension, and controlled edge violations.
 
+Treat the background field, photo object, type mass, and one optional graphic material as four related layers. Make type actively cross, press against, nest with, or interrupt the photo when the chosen interaction calls for it. Do not default to symmetrical boxes, polite type-safe panels, or two-column corporate composition.
+
+Do not treat visibly torn paper, color blocks, or stickers as mandatory evidence of collage. A complete photo plus type that uses its architecture, foliage, scale, and negative space can be the strongest collage route. In a cutout route, create depth through source-derived layer order before adding any visible material effect.
+
+State the complete z-order before rendering. In reconstruction, type-led, and photo-block modes, keep the final required title as the topmost layer by default; let it cross background, photo block, and non-critical subject areas. Place it behind the image only when that is the chosen relationship, not by accident.
+
 Make hierarchy visible:
 
 - one dominant event;
@@ -88,15 +110,23 @@ When using label fragments, keep them visually consistent and leave intentional 
 
 Select materials semantically, not from a universal sticker pack. Read [theme-language.md](references/theme-language.md) and use at most two material families.
 
+Prefer crop-ready details from the source photo. Generate a supplementary material only when it is a semantically specific counterpart to the subject and has a clear compositional job; for example, a cat's fish or paw mark, a performance's microphone cue, or a scene-specific object. Never use generated material as generic filler.
+
 Do not add stars, arrows, sticky notes, tape, sauce, flowers, grain, or doodles merely because the work is called a collage.
 
 ### 6. Handle typography deliberately
+
+Choose and record one lettering strategy before rendering:
+
+- **deterministic type (default)** — generate a text-free base, then add exact wording with real fonts in HTML, SVG, canvas, or a design tool. Use for Chinese, names, dates, multi-line copy, brand copy, or whenever exact wording and revision safety matter.
+- **model-led display type (controlled exception)** — permit the image model to render one short, expressive display phrase only when its irregular lettering is materially part of the source's visual language (for example a crayon IP illustration). Never use it for required supporting copy or microcopy.
+- **hybrid** — accept a model-rendered display word only after it passes the model-lettering gate; render every other required word deterministically.
 
 Treat final text as real typography whenever possible:
 
 - generate the visual base without final wording;
 - add exact text afterward with real fonts in HTML, SVG, canvas, or a design tool;
-- use AI-rendered lettering only when illegibility and irregularity are an intentional visual effect;
+- use AI-rendered lettering only through the controlled exception above; do not treat it as a default shortcut;
 - keep all required wording exact;
 - set line breaks manually;
 - separate display type, supporting type, and microcopy;
@@ -104,20 +134,20 @@ Treat final text as real typography whenever possible:
 
 Follow [typography-and-qc.md](references/typography-and-qc.md).
 
-If the output must be a single raster image, create the base first and then render the final type deterministically. Do not accept malformed AI text as a finished result.
+If the output must be a single raster image, create the base first and then render the final type deterministically, unless the controlled model-led display exception is selected and passes its gate. Do not accept malformed AI text as a finished result.
 
 ### 7. Build without damaging the source
 
 When using an image-generation or editing model:
 
 - preserve identity, face, body proportions, pose, clothing, animal markings, and important objects;
-- request a text-free collage base with deliberate typography zones;
+- request a text-free collage base with deliberate typography zones, unless the selected strategy is the controlled model-led display exception;
 - specify exact subject placement and crop;
 - request cut-paper, photocopy, risograph, marker, fabric, ticket, menu, or other chosen material explicitly;
 - prohibit blur, fake depth-of-field, fog, glossy 3D stickers, generic gradients, warped anatomy, fake logos, and unrelated props;
 - do not invent food, sauce, or accessories that alter the meaning of the photo.
 
-In Production mode, generate a text-free base first, inspect it, and add required text with real fonts only after the base passes source-preservation checks. Use the production protocol's base-prompt field order and its retry limits.
+In Production mode, use deterministic type by default: generate a text-free base, inspect it, and add required text with real fonts only after the base passes source-preservation checks. A model-led display phrase is acceptable only under the production protocol's explicit acceptance gate. Use the production protocol's base-prompt field order and its retry limits.
 
 ### 8. Critique and revise
 
