@@ -116,11 +116,17 @@ Do not add stars, arrows, sticky notes, tape, sauce, flowers, grain, or doodles 
 
 ### 6. Handle typography deliberately
 
+Choose and record one lettering strategy before rendering:
+
+- **deterministic type (default)** — generate a text-free base, then add exact wording with real fonts in HTML, SVG, canvas, or a design tool. Use for Chinese, names, dates, multi-line copy, brand copy, or whenever exact wording and revision safety matter.
+- **model-led display type (controlled exception)** — permit the image model to render one short, expressive display phrase only when its irregular lettering is materially part of the source's visual language (for example a crayon IP illustration). Never use it for required supporting copy or microcopy.
+- **hybrid** — accept a model-rendered display word only after it passes the model-lettering gate; render every other required word deterministically.
+
 Treat final text as real typography whenever possible:
 
 - generate the visual base without final wording;
 - add exact text afterward with real fonts in HTML, SVG, canvas, or a design tool;
-- use AI-rendered lettering only when illegibility and irregularity are an intentional visual effect;
+- use AI-rendered lettering only through the controlled exception above; do not treat it as a default shortcut;
 - keep all required wording exact;
 - set line breaks manually;
 - separate display type, supporting type, and microcopy;
@@ -128,20 +134,20 @@ Treat final text as real typography whenever possible:
 
 Follow [typography-and-qc.md](references/typography-and-qc.md).
 
-If the output must be a single raster image, create the base first and then render the final type deterministically. Do not accept malformed AI text as a finished result.
+If the output must be a single raster image, create the base first and then render the final type deterministically, unless the controlled model-led display exception is selected and passes its gate. Do not accept malformed AI text as a finished result.
 
 ### 7. Build without damaging the source
 
 When using an image-generation or editing model:
 
 - preserve identity, face, body proportions, pose, clothing, animal markings, and important objects;
-- request a text-free collage base with deliberate typography zones;
+- request a text-free collage base with deliberate typography zones, unless the selected strategy is the controlled model-led display exception;
 - specify exact subject placement and crop;
 - request cut-paper, photocopy, risograph, marker, fabric, ticket, menu, or other chosen material explicitly;
 - prohibit blur, fake depth-of-field, fog, glossy 3D stickers, generic gradients, warped anatomy, fake logos, and unrelated props;
 - do not invent food, sauce, or accessories that alter the meaning of the photo.
 
-In Production mode, generate a text-free base first, inspect it, and add required text with real fonts only after the base passes source-preservation checks. Use the production protocol's base-prompt field order and its retry limits.
+In Production mode, use deterministic type by default: generate a text-free base, inspect it, and add required text with real fonts only after the base passes source-preservation checks. A model-led display phrase is acceptable only under the production protocol's explicit acceptance gate. Use the production protocol's base-prompt field order and its retry limits.
 
 ### 8. Critique and revise
 
