@@ -30,6 +30,7 @@ Inspect every supplied image. Record:
 - whether clean subject separation is feasible;
 - whether the original scene already has a complete background and visual narrative;
 - supporting objects, animals, clothing details, gestures, and textures that can become source-derived cutout materials;
+- any **context anchor** that gives the subject its meaning: for example, a person at a door with the full facade, a pet with the hands holding it, or a performer with the microphone and stage cue. Preserve the anchor as one deliberate group when reconstructing;
 - theme cues such as pet, food, travel, friendship, event, fashion, or daily life;
 - any existing text or logo that must not be accidentally imitated.
 
@@ -90,6 +91,8 @@ For each direction, specify:
 Use one of the layout grammars rather than placing text in leftover space. Permit overlap, cropping, asymmetric tension, and controlled edge violations.
 
 Treat the background field, photo object, type mass, and one optional graphic material as four related layers. Make type actively cross, press against, nest with, or interrupt the photo when the chosen interaction calls for it. Do not default to symmetrical boxes, polite type-safe panels, or two-column corporate composition.
+
+Do not treat visibly torn paper, color blocks, or stickers as mandatory evidence of collage. A complete photo plus type that uses its architecture, foliage, scale, and negative space can be the strongest collage route. In a cutout route, create depth through source-derived layer order before adding any visible material effect.
 
 State the complete z-order before rendering. In reconstruction, type-led, and photo-block modes, keep the final required title as the topmost layer by default; let it cross background, photo block, and non-critical subject areas. Place it behind the image only when that is the chosen relationship, not by accident.
 

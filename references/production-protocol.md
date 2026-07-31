@@ -12,6 +12,7 @@ canvas: "aspect ratio and pixel target"
 source:
   hero: "photo or subject to preserve"
   preserve: ["identity", "pose", "key object"]
+  context_anchor: "source elements that must remain together to preserve the scene's meaning, or none"
   crop_safe: "what may be cropped"
   state: "complete-scene, cutout-ready subject, or photo-block breakout"
   existing_text_policy: "preserve, remove/crop, or replace"
@@ -43,7 +44,7 @@ Do not invent unspecified words. If text is missing, use no display text or one 
 
 Use one composition mode, one layout grammar, and one image role. Select materials from the subject's theme or crop them from the source; do not use a universal sticker set.
 
-Choose the mode from the source state before writing a prompt. Preserve an already complete scene in **original-scene annotation** mode. Use a pure field and cutout subject only when the source benefits from reconstruction. Use a retained photo rectangle plus selective breakout when the original photo is a valuable physical object. Read [composition-modes.md](composition-modes.md) before choosing.
+Choose the mode from the source state before writing a prompt. Preserve an already complete scene in **original-scene annotation** mode; full-scene type overlay is a primary route, not a fallback. Use a pure field and cutout subject only when the source benefits from reconstruction. When reconstruction separates a subject from its environment, preserve the declared context anchor as an intact group. Use a retained photo rectangle plus selective breakout when the original photo is a valuable physical object. Read [composition-modes.md](composition-modes.md) before choosing.
 
 For multi-photo work, name one hero, one support, and optional detail. For a single image, choose either full-image, framed object, subject reconstruction, break-frame hybrid, or fragments. Do not mix several image roles merely to make the work look busy.
 
@@ -54,7 +55,7 @@ When three directions are requested, record a distinct recipe for each. Reject d
 Write the prompt in this field order. Keep it decisive and specific; include only visible instructions.
 
 1. **Canvas and source:** output ratio, source-photo fidelity, subject, allowed crop, and preserved details.
-2. **Composition:** source state, composition mode, layout grammar, image role, percentage-based scale, placement, complete z-order, and explicit image–type relationship. When a visual reference is supplied, name its chosen interaction family and make that relationship visible; do not translate it into separated text cards.
+2. **Composition:** source state, composition mode, layout grammar, image role, percentage-based scale, placement, complete z-order, declared context anchor, and explicit image–type relationship. When a visual reference is supplied, name its chosen interaction family and make that relationship visible; do not translate it into separated text cards. State explicitly whether the route is seamless full-scene overlay or an extracted reconstruction; do not add paper pieces or color blocks by default.
 3. **Materials and palette:** source-derived palette, source-harvested or semantically specific materials, texture, and the planned type path. Do not reserve a blank text card or a polite safe panel when the selected relationship requires type to cross the photo.
 4. **Negative constraints:** no final lettering, malformed text, fake logos, identity drift, unrelated props, generic decorations, blur, glossy 3D stickers, or unrequested style effects.
 
@@ -76,6 +77,7 @@ Pass every gate before delivery:
 
 - **Source fidelity:** preserve identity, pose, clothing, markings, and declared key objects; do not add semantic props.
 - **Structure:** show one dominant event and one secondary event; for multi-image work, the hero occupies about 45–70% of image area.
+- **Context integrity:** when a cutout subject depends on a source setting for its meaning, retain the declared anchor intact. Do not reduce a building to a floating roof, a person-and-pet scene to an unexplained pet, or an action scene to unrelated fragments.
 - **Material discipline:** use one primary material family and at most one support family; every material has a subject-specific reason.
 - **Typography:** reproduce required text exactly with real type; keep it readable and sufficiently contrasted at its actual overlap area.
 - **Layer intent:** honor the selected final z-order. In type-on-top modes, the final title visibly crosses the background and photo or breakout subject; it is never accidentally hidden beneath them.
